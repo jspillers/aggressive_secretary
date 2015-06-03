@@ -15,6 +15,8 @@ except NameError:
     GPIO = False
 else:
     GPIO.setmode(GPIO.BCM)
+    GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(3, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
@@ -26,36 +28,40 @@ class EventHandler():
         self.logger = kwargs['logger']
         self.click_tracks = kwargs['click_tracks']
         self.bg_images = kwargs['bg_images']
-        self.buttons_pressed = { '18': False, '23': False }
+        self.buttons_pressed = { 
+            '2': False, '3': False, '18': False, '23': False 
+        }
 
     def call(self, time):
         global GPIO
 
         if GPIO:
-            button_18_input_state = GPIO.input(18)
-            if button_18_input_state == False:
-                if self.buttons_pressed['18'] == False:
-                    self.logger.info('18 button press')
-                    self.buttons_pressed['18'] = True
-                    self.click_tracks.trackers['runner'].handle_click()
-                    self.click_tracks.click_event()
-            else:
-                self.buttons_pressed['18'] = False
+            def on_press_18():
+                self.click_tracks.trackers['runner'].handle_click()
+                self.click_tracks.click_event()
 
-            button_23_input_state = GPIO.input(23)
-            if button_23_input_state == False:
-                if self.buttons_pressed['23'] == False:
-                    self.logger.info('23 button press')
-                    self.buttons_pressed['23'] = True
-                    self.click_tracks.trackers['corp'].handle_click()
-                    self.click_tracks.click_event()
-            else:
-                self.buttons_pressed['23'] = False
+            self.__handle_gpio_press(18, on_press_18)
+
+            def on_press_23():
+                self.click_tracks.trackers['corp'].handle_click()
+                self.click_tracks.click_event()
+
+            self.__handle_gpio_press(23, on_press_23)
 
         for e in self.pygame.event.get():
             self.sgc.event(e)
             self.__handle_event(e)
 
+    def __handle_gpio_press(self, pin_num, on_press):
+        button_input_state = GPIO.input(pin_num)
+        if button_input_state == False:
+            if self.buttons_pressed[str(pin_num)] == False:
+                self.logger.info('button press on pin ' + pin_num)
+                self.buttons_pressed[str(pin_num)] = True
+                on_press()
+        else:
+            self.buttons_pressed[str(pin_num)] = False
+        
 
     def __handle_event(self, e):
         if e.type == GUI:

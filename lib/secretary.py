@@ -35,15 +35,15 @@ bg_images = BackgroundImages(pygame, screen, logger)
 click_tracks = ClickTrackers(pygame=pygame, screen=screen, sgc=sgc, use_gui=USE_GUI, logger=logger)
 
 # ----- Corporation counters
-corp_credits = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='credits', x_pos=20, y_pos=200)
-corp_handsize = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='corp_handsize', x_pos=200, y_pos=200)
+corp_credits = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='credits', x_pos=20, y_pos=200, counter=5)
+corp_handsize = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='corp_handsize', x_pos=200, y_pos=200, counter=5)
 corp_bad_publicity = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='bad_publicity', x_pos=20, y_pos=400, x_adjust=0, y_adjust=18)
 
 # ----- Runner counters
 runner_credits = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='credits', x_pos=420, y_pos=200, counter=5)
-runner_handsize = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='runner_handsize', x_pos=620, y_pos=200)
+runner_handsize = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='runner_handsize', x_pos=620, y_pos=200, counter=5)
 runner_brain_damage = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='brain_damage', x_pos=420, y_pos=400, x_adjust=0, y_adjust=12)
-runner_memory_units = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='memory_units', x_pos=620, y_pos=400, x_adjust=16, y_adjust=25)
+runner_memory_units = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='memory_units', x_pos=620, y_pos=400, x_adjust=16, y_adjust=25, counter=4)
 runner_tags = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='tags', x_pos=620, y_pos=300, x_adjust=0, y_adjust=12)
 
 event_handler = EventHandler(pygame=pygame, sgc=sgc, screen=screen, click_tracks=click_tracks, bg_images=bg_images, logger=logger)
