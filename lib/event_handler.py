@@ -37,10 +37,10 @@ class EventHandler():
         if GPIO:
             button_18_input_state = GPIO.input(18)
             if button_18_input_state == False:
-                if self.buttons_pressed['18'] == False
+                if self.buttons_pressed['18'] == False:
                     self.logger.info('button press')
                     self.buttons_pressed['18'] = True
-            else
+            else:
                 self.buttons_pressed['18'] = False
 
     def __handle_event(self, e):
