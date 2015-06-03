@@ -17,18 +17,11 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(console_handler)
 
 if sys.platform != 'darwin':
-    import RPi.GPIO as GPIO
-
-try:
-    GPIO
-except NameError:
-    USE_GUI = True
-    logger.info('GPIO is not present, system is ' + sys.platform)    
-else:
     USE_GUI = False
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    logger.info('GPIO present')    
+    logger.info('GPIO is present, system is ' + sys.platform)    
+else:
+    USE_GUI = True
+    logger.info('GPIO is NOT present, system is ' + sys.platform)    
 
 pygame.display.init()
 pygame.font.init()

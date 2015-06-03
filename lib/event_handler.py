@@ -1,9 +1,21 @@
+import sys
 import sgc
 from sgc.locals import *
 import pygame
 from pygame.locals import *
 
 TURN_ENDED = USEREVENT + 1
+
+if sys.platform != 'darwin':
+    import RPi.GPIO as GPIO
+
+try:
+    GPIO
+except NameError:
+    GPIO = False
+else:
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 class EventHandler():
     def __init__(self, **kwargs):
@@ -20,7 +32,9 @@ class EventHandler():
             self.__handle_event(e)
 
     def __handle_event(self, e):
-        if self.gpio:
+        global GPIO
+
+        if GPIO:
             button_18_input_state = self.gpio.input(18)
             if button_18_input_state == False:
                 print('Button Pressed')
