@@ -22,22 +22,24 @@ class EventHandler():
         self.pygame = kwargs['pygame']
         self.screen = kwargs['screen']
         self.sgc = kwargs['sgc']
+        self.logger = kwargs['logger']
         self.click_tracks = kwargs['click_tracks']
         self.bg_images = kwargs['bg_images']
 
     def call(self, time):
+        global GPIO
+
         for e in self.pygame.event.get():
             self.sgc.event(e)
             self.__handle_event(e)
 
-    def __handle_event(self, e):
-        global GPIO
-
         if GPIO:
             button_18_input_state = GPIO.input(18)
             if button_18_input_state == False:
-                print('Button Pressed')
+	        self.logger.info('button press')
 
+
+    def __handle_event(self, e):
         if e.type == GUI:
             self.click_tracks.click_event(e)
 

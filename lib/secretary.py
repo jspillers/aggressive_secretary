@@ -46,7 +46,7 @@ runner_brain_damage = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type=
 runner_memory_units = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='memory_units', x_pos=620, y_pos=400, x_adjust=16, y_adjust=25)
 runner_tags = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='tags', x_pos=620, y_pos=300, x_adjust=0, y_adjust=12)
 
-event_handler = EventHandler(pygame=pygame, sgc=sgc, screen=screen, click_tracks=click_tracks, bg_images=bg_images)
+event_handler = EventHandler(pygame=pygame, sgc=sgc, screen=screen, click_tracks=click_tracks, bg_images=bg_images, logger=logger)
 
 while True:
     time = clock.tick(30)
