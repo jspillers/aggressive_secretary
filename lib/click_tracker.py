@@ -14,19 +14,25 @@ class ClickTrackers:
             pygame=self.pygame, screen=self.screen, sgc=self.sgc, use_gui=self.use_gui, 
             tracker_type='corp', x_pos=20, y_pos=20, logger=self.logger
         )
-
         self.runner_click_track = ClickTracker(
             pygame=self.pygame, screen=self.screen, sgc=self.sgc, use_gui=self.use_gui,
             tracker_type='runner', x_pos=420, y_pos=20, logger=self.logger
         )
+        self.trackers = {
+          'corp': self.corp_click_track,
+          'runner': self.runner_click_track
+        }
 
         self.runner_click_track.clicks = 4
+
+    def current_tracker():
+        return self.trackers[self.current_player]
 
     def update(self):
         self.corp_click_track.update()
         self.runner_click_track.update()
 
-    def click_event(self, event):
+    def click_event(self):
         self.logger.info(self.turn_num)
         if self.current_player == 'corp':
             if self.corp_click_track.clicks == self.corp_click_track.max_clicks:
@@ -72,9 +78,9 @@ class ClickTracker:
             'images/' + self.tracker_type + '_click_track.png').convert_alpha()
 
         if self.use_gui == True:
-          self.click_btn = self.sgc.Button(label='click', pos=(self.x_pos, self.y_pos + 100))
-          self.click_btn.on_click = self.advance_click
-          self.click_btn.add()
+            self.click_btn = self.sgc.Button(label='click', pos=(self.x_pos, self.y_pos + 100))
+            self.click_btn.on_click = self.handle_click
+            self.click_btn.add()
 
     def click_image(self):
         return self.pygame.image.load('images/click_track_mask.png').convert_alpha()
@@ -88,7 +94,7 @@ class ClickTracker:
     def reset(self):
       self.clicks = 0
 
-    def advance_click(self):
+    def handle_click(self):
         if self.use_gui == True:
             self.sgc.Button.on_click(self.click_btn) 
 

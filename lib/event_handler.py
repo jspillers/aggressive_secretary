@@ -31,16 +31,14 @@ class EventHandler():
     def call(self, time):
         global GPIO
 
-        for e in self.pygame.event.get():
-            self.sgc.event(e)
-            self.__handle_event(e)
-
         if GPIO:
             button_18_input_state = GPIO.input(18)
             if button_18_input_state == False:
                 if self.buttons_pressed['18'] == False:
                     self.logger.info('18 button press')
                     self.buttons_pressed['18'] = True
+                    self.click_tracks.trackers['runner'].handle_click()
+                    self.click_tracks.click_event()
             else:
                 self.buttons_pressed['18'] = False
 
@@ -49,13 +47,20 @@ class EventHandler():
                 if self.buttons_pressed['23'] == False:
                     self.logger.info('23 button press')
                     self.buttons_pressed['23'] = True
+                    self.click_tracks.trackers['corp'].handle_click()
+                    self.click_tracks.click_event()
             else:
                 self.buttons_pressed['23'] = False
+
+        for e in self.pygame.event.get():
+            self.sgc.event(e)
+            self.__handle_event(e)
 
 
     def __handle_event(self, e):
         if e.type == GUI:
-            self.click_tracks.click_event(e)
+            self.logger.info(e)
+            self.click_tracks.click_event()
 
         if e.type == TURN_ENDED:
             self.bg_images.display_next_bg_image()
