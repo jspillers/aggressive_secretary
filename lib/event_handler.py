@@ -19,7 +19,6 @@ else:
 
 class EventHandler():
     def __init__(self, **kwargs):
-        self.gpio = kwargs['gpio'] if 'gpio' in kwargs else False
         self.pygame = kwargs['pygame']
         self.screen = kwargs['screen']
         self.sgc = kwargs['sgc']
@@ -35,7 +34,7 @@ class EventHandler():
         global GPIO
 
         if GPIO:
-            button_18_input_state = self.gpio.input(18)
+            button_18_input_state = GPIO.input(18)
             if button_18_input_state == False:
                 print('Button Pressed')
 
