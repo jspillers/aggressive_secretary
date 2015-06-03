@@ -16,6 +16,7 @@ except NameError:
 else:
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 class EventHandler():
     def __init__(self, **kwargs):
@@ -25,7 +26,7 @@ class EventHandler():
         self.logger = kwargs['logger']
         self.click_tracks = kwargs['click_tracks']
         self.bg_images = kwargs['bg_images']
-        self.buttons_pressed = { '18': False }
+        self.buttons_pressed = { '18': False, '23': False }
 
     def call(self, time):
         global GPIO
@@ -38,10 +39,19 @@ class EventHandler():
             button_18_input_state = GPIO.input(18)
             if button_18_input_state == False:
                 if self.buttons_pressed['18'] == False:
-                    self.logger.info('button press')
+                    self.logger.info('18 button press')
                     self.buttons_pressed['18'] = True
             else:
                 self.buttons_pressed['18'] = False
+
+            button_23_input_state = GPIO.input(23)
+            if button_23_input_state == False:
+                if self.buttons_pressed['23'] == False:
+                    self.logger.info('23 button press')
+                    self.buttons_pressed['23'] = True
+            else:
+                self.buttons_pressed['23'] = False
+
 
     def __handle_event(self, e):
         if e.type == GUI:
