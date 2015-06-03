@@ -56,7 +56,7 @@ class EventHandler():
         button_input_state = GPIO.input(pin_num)
         if button_input_state == False:
             if self.buttons_pressed[str(pin_num)] == False:
-                self.logger.info('button press on pin ' + pin_num)
+                self.logger.info('button press on pin ' + str(pin_num))
                 self.buttons_pressed[str(pin_num)] = True
                 on_press()
         else:
