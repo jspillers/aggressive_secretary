@@ -1,3 +1,4 @@
+import sys
 import sgc
 from sgc.locals import *
 import pygame
@@ -6,6 +7,7 @@ import logging
 from background_images import *
 from click_tracker import *
 from incrementable_counter import *
+from event_handler import *
 
 log_format = '%(asctime)-6s: %(name)s - %(levelname)s - %(message)s'
 console_handler = logging.StreamHandler()
@@ -14,6 +16,20 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 logger.addHandler(console_handler)
 
+if sys.platform != 'darwin':
+    import RPi.GPIO as GPIO
+
+try:
+    GPIO
+except NameError:
+    USE_GUI = True
+    logger.info('GPIO is not present, system is ' + sys.platform)    
+else:
+    USE_GUI = False
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    logger.info('GPIO present')    
+
 pygame.display.init()
 pygame.font.init()
 
@@ -21,42 +37,32 @@ screen = sgc.surface.Screen((800,480))
 
 clock = pygame.time.Clock()
 
-bg_image = BackgroundImages(pygame, screen, logger)
-click_tracks = ClickTrackers(pygame, screen, sgc, logger)
+# setup background and click trackers
+bg_images = BackgroundImages(pygame, screen, logger)
+click_tracks = ClickTrackers(pygame=pygame, screen=screen, sgc=sgc, use_gui=USE_GUI, logger=logger)
 
-corp_credits = IncrementableCounter(pygame, sgc, 'credits', 20, 200)
-corp_handsize = IncrementableCounter(pygame, sgc, 'corp_handsize', 200, 200)
-corp_bad_publicity = IncrementableCounter(pygame, sgc, 'bad_publicity', 20, 400, 0, 18)
+# ----- Corporation counters
+corp_credits = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='credits', x_pos=20, y_pos=200)
+corp_handsize = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='corp_handsize', x_pos=200, y_pos=200)
+corp_bad_publicity = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='bad_publicity', x_pos=20, y_pos=400, x_adjust=0, y_adjust=18)
 
-runner_credits = IncrementableCounter(pygame, sgc, 'credits', 420, 200)
-runner_handsize = IncrementableCounter(pygame, sgc, 'runner_handsize', 620, 200)
-runner_brain_damage = IncrementableCounter(pygame, sgc, 'brain_damage', 420, 400, 0, 12)
-runner_memory_units = IncrementableCounter(pygame, sgc, 'memory_units', 620, 400, 16, 25)
-runner_tags = IncrementableCounter(pygame, sgc, 'tags', 620, 300, 0, 12)
+# ----- Runner counters
+runner_credits = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='credits', x_pos=420, y_pos=200, counter=5)
+runner_handsize = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='runner_handsize', x_pos=620, y_pos=200)
+runner_brain_damage = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='brain_damage', x_pos=420, y_pos=400, x_adjust=0, y_adjust=12)
+runner_memory_units = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='memory_units', x_pos=620, y_pos=400, x_adjust=16, y_adjust=25)
+runner_tags = IncrementableCounter(pygame=pygame, sgc=sgc, counter_type='tags', x_pos=620, y_pos=300, x_adjust=0, y_adjust=12)
+
+event_handler = EventHandler(pygame=pygame, sgc=sgc, screen=screen, click_tracks=click_tracks, bg_images=bg_images)
 
 while True:
     time = clock.tick(30)
-
-    for e in pygame.event.get():
-        sgc.event(e)
-        if e.type == GUI:
-            click_tracks.click_event(e)
-
-        if e.type == QUIT:
-            exit()
-
-        # toggle fullscreen with alt + enter
-        if (e.type is KEYDOWN and e.key == K_RETURN
-                and (e.mod&(KMOD_LALT|KMOD_RALT)) != 0):
-            if screen.get_flags() & FULLSCREEN:
-                pygame.display.set_mode(screen.get_size())
-            else:
-                pygame.display.set_mode(screen.get_size(), pygame.FULLSCREEN)
-
-
+    event_handler.call(time)
     screen.fill((0,0,0))
-    bg_image.cycle_images()
+
+    bg_images.update()
     click_tracks.update()
     sgc.update(time)
+
     pygame.display.flip()
 

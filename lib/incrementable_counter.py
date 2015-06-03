@@ -1,15 +1,8 @@
 
 class IncrementableCounter:
 
-    def __init__(self, _pygame, _sgc, counter_type, x_pos, y_pos, x_adjust = 0, y_adjust = 0):
-        self.counter_type = counter_type
-        self.x_pos = x_pos
-        self.y_pos = y_pos
-        self.x_adjust = x_adjust
-        self.y_adjust = y_adjust
-        self.counter = 0
-        self.pygame = _pygame
-        self.sgc = _sgc
+    def __init__(self, **kwargs):
+        self.__configure(kwargs)
         self.init_counter_icon()
         self.init_counter_label()
 
@@ -21,7 +14,7 @@ class IncrementableCounter:
         self.counter_icon.add()
 
     def init_counter_label(self):
-        _font = self.pygame.font.SysFont('monospace', 80, bold=True)
+        _font = self.pygame.font.SysFont('arial', 80, bold=True)
         self.counter_label = self.sgc.Label(
             text=str(self.counter), 
             col=(255, 255, 255),
@@ -38,4 +31,16 @@ class IncrementableCounter:
 
     def reset():
         self.counter = 0
+
+    def __configure(self, kwargs):
+        self.counter_type = kwargs['counter_type']
+        self.x_pos = kwargs['x_pos']
+        self.y_pos = kwargs['y_pos']
+        self.pygame = kwargs['pygame']
+        self.sgc = kwargs['sgc']
+
+        self.x_adjust = kwargs['x_adjust'] if 'x_adjust' in kwargs else 0
+        self.y_adjust = kwargs['y_adjust'] if 'y_adjust' in kwargs else 0
+        self.counter = kwargs['counter'] if 'counter' in kwargs else 0
+
 

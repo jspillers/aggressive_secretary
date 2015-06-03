@@ -1,4 +1,3 @@
-
 class BackgroundImages:
 
     def __init__(self, _pygame, _screen, _logger):
@@ -23,11 +22,13 @@ class BackgroundImages:
 
         if self.elapsed_time > self.cycle_time:
             self.elapsed_time = 0
+            self.display_next_bg_image()
 
-            if self.current_bg_index >= len(self.background_images) - 1:
-                self.current_bg_index = 0
-            else:
-                self.current_bg_index += 1
+    def display_next_bg_image(self):
+        if self.current_bg_index >= len(self.background_images) - 1:
+            self.current_bg_index = 0
+        else:
+            self.current_bg_index += 1
 
+    def update(self):
         self.screen.blit(self.current_bg_image(), [0, 0])
-        
