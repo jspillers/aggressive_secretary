@@ -48,6 +48,16 @@ class EventHandler():
 
             self.__handle_gpio_press(23, on_press_23)
 
+            def on_press_2():
+                self.logger.info('press 2')
+
+            self.__handle_gpio_press(2, on_press_2)
+
+            def on_press_3():
+                self.logger.info('press 3')
+
+            self.__handle_gpio_press(3, on_press_3)
+
         for e in self.pygame.event.get():
             self.sgc.event(e)
             self.__handle_event(e)
