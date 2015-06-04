@@ -15,10 +15,9 @@ except NameError:
     GPIO = False
 else:
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(3, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    # setup pins 2 through 19
+    for pin_num in list(range(2,20)):
+        GPIO.setup(pin_num, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 class EventHandler():
     def __init__(self, **kwargs):
@@ -28,41 +27,23 @@ class EventHandler():
         self.logger = kwargs['logger']
         self.click_tracks = kwargs['click_tracks']
         self.bg_images = kwargs['bg_images']
-        self.buttons_pressed = { 
-            '2': False, '3': False, '18': False, '23': False 
-        }
+
+        self.buttons_pressed = {}
+        for pin_num in list(range(2,20)):
+            self.buttons_pressed[str(pin_num)] = False
 
     def call(self, time):
         global GPIO
 
         if GPIO:
-            def on_press_18():
-                self.click_tracks.trackers['runner'].handle_click()
-                self.click_tracks.click_event()
-
-            self.__handle_gpio_press(18, on_press_18)
-
-            def on_press_23():
-                self.click_tracks.trackers['corp'].handle_click()
-                self.click_tracks.click_event()
-
-            self.__handle_gpio_press(23, on_press_23)
-
-            def on_press_2():
-                self.logger.info('press 2')
-
-            self.__handle_gpio_press(2, on_press_2)
-
-            def on_press_3():
-                self.logger.info('press 3')
-
-            self.__handle_gpio_press(3, on_press_3)
+            self.__handle_gpio_events()
 
         for e in self.pygame.event.get():
             self.sgc.event(e)
             self.__handle_event(e)
 
     def __handle_gpio_press(self, pin_num, on_press):
+        global GPIO
         button_input_state = GPIO.input(pin_num)
         if button_input_state == False:
             if self.buttons_pressed[str(pin_num)] == False:
@@ -71,7 +52,6 @@ class EventHandler():
                 on_press()
         else:
             self.buttons_pressed[str(pin_num)] = False
-        
 
     def __handle_event(self, e):
         if e.type == GUI:
@@ -92,4 +72,81 @@ class EventHandler():
             else:
                 self.pygame.display.set_mode(self.screen.get_size(), self.pygame.FULLSCREEN)
 
+    def __handle_gpio_events(self):
+        def on_press_2():
+            self.logger.info('press 2')
+
+        def on_press_3():
+            self.logger.info('press 3')
+
+        def on_press_4():
+            self.logger.info('press 4')
+
+        def on_press_5():
+            self.logger.info('press 5')
+
+        def on_press_6():
+            self.logger.info('press 6')
+
+        def on_press_7():
+            self.logger.info('press 7')
+
+        def on_press_8():
+            self.logger.info('press 8')
+
+        def on_press_9():
+            self.logger.info('press 9')
+
+        def on_press_10():
+            self.logger.info('press 10')
+
+        def on_press_11():
+            self.logger.info('press 11')
+
+        def on_press_12():
+            self.logger.info('press 12')
+
+        def on_press_13():
+            self.logger.info('press 13')
+
+        def on_press_14():
+            self.logger.info('press 14')
+
+        def on_press_15():
+            self.logger.info('press 15')
+
+        def on_press_16():
+            self.logger.info('press 16')
+
+        def on_press_17():
+            self.logger.info('press 17')
+
+        def on_press_18():
+            self.logger.info('press 18')
+            self.click_tracks.trackers['runner'].handle_click()
+            self.click_tracks.click_event()
+
+        def on_press_19():
+            self.logger.info('press 19')
+            self.click_tracks.trackers['corp'].handle_click()
+            self.click_tracks.click_event()
+
+        self.__handle_gpio_press(2, on_press_2)
+        self.__handle_gpio_press(3, on_press_3)
+        self.__handle_gpio_press(4, on_press_4)
+        self.__handle_gpio_press(5, on_press_5)
+        self.__handle_gpio_press(6, on_press_6)
+        self.__handle_gpio_press(7, on_press_7)
+        self.__handle_gpio_press(8, on_press_8)
+        self.__handle_gpio_press(9, on_press_9)
+        self.__handle_gpio_press(10, on_press_10)
+        self.__handle_gpio_press(11, on_press_11)
+        self.__handle_gpio_press(12, on_press_12)
+        self.__handle_gpio_press(13, on_press_13)
+        self.__handle_gpio_press(14, on_press_14)
+        self.__handle_gpio_press(15, on_press_15)
+        self.__handle_gpio_press(16, on_press_16)
+        self.__handle_gpio_press(17, on_press_17)
+        self.__handle_gpio_press(18, on_press_18)
+        self.__handle_gpio_press(19, on_press_19)
 
