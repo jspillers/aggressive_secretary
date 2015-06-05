@@ -12,11 +12,11 @@ class ClickTrackers:
 
         self.corp_click_track = ClickTracker(
             pygame=self.pygame, screen=self.screen, sgc=self.sgc, 
-            tracker_type='corp', x_pos=20, y_pos=20, logger=self.logger
+            tracker_type='corp', x_pos=20, y_pos=15, logger=self.logger
         )
         self.runner_click_track = ClickTracker(
             pygame=self.pygame, screen=self.screen, sgc=self.sgc,
-            tracker_type='runner', x_pos=420, y_pos=20, logger=self.logger
+            tracker_type='runner', x_pos=420, y_pos=15, logger=self.logger
         )
         self.trackers = {
           'corp': self.corp_click_track,

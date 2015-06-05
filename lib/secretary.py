@@ -41,12 +41,12 @@ click_tracks = ClickTrackers(pygame=pygame, screen=screen, sgc=sgc, logger=logge
 # ----- Agendas Track
 corp_agendas = AgendaTracker(
     pygame=pygame, sgc=sgc, tracker_type='corp',
-    x_pos=20, y_pos=140
+    x_pos=20, y_pos=150
 )
 
 runner_agendas = AgendaTracker(
     pygame=pygame, sgc=sgc, tracker_type='runner',
-    x_pos=20, y_pos=140
+    x_pos=20, y_pos=150
 )
 
 # ----- Counters
