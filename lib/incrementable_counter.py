@@ -23,6 +23,9 @@ class IncrementableCounter:
         )
         self.counter_label.add()
 
+    def update(self):
+        self.counter_label.config()
+
     def increment_counter(self):
         self.counter += 1
 

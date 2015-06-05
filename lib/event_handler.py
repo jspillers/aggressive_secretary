@@ -78,7 +78,6 @@ class EventHandler():
             self.logger.info('press 2')
             self.counters['corp_credits'].increment_counter()
             self.counters['corp_credits'].update()
-            self.counters['corp_credits'].config()
 
         def on_press_3():
             self.logger.info('press 3')
