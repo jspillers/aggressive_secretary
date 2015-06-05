@@ -41,8 +41,6 @@ corp_agendas = AgendaTracker(
     pygame=pygame, sgc=sgc, tracker_type='corp',
     x_pos=20, y_pos=180
 )
-corp_agendas.add_point()
-corp_agendas.add_point()
 
 runner_agendas = AgendaTracker(
     pygame=pygame, sgc=sgc, tracker_type='runner',
