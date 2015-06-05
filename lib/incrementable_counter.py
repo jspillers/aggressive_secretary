@@ -24,11 +24,11 @@ class IncrementableCounter:
         self.counter_label.add()
 
     def increment_counter(self):
-        logger.info('increment')
+        self.counter += 1
 
     def decrement_counter(self):
-        logger.info('decrement')
-
+        self.counter -= 1
+        
     def reset():
         self.counter = 0
 

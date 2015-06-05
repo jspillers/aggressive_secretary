@@ -27,6 +27,7 @@ class EventHandler():
         self.logger = kwargs['logger']
         self.click_tracks = kwargs['click_tracks']
         self.bg_images = kwargs['bg_images']
+        self.counters = kwargs['counters']
 
         self.buttons_pressed = {}
         for pin_num in list(range(2,20)):
@@ -75,51 +76,67 @@ class EventHandler():
     def __handle_gpio_events(self):
         def on_press_2():
             self.logger.info('press 2')
+            counters['corp_credits'].increment_counter()
 
         def on_press_3():
             self.logger.info('press 3')
+            counters['corp_credits'].decrement_counter()
 
         def on_press_4():
             self.logger.info('press 4')
+            counters['corp_handsize'].increment_counter()
 
         def on_press_5():
             self.logger.info('press 5')
+            counters['corp_handsize'].decrement_counter()
 
         def on_press_6():
             self.logger.info('press 6')
+            counters['corp_bad_publicity'].increment_counter()
 
         def on_press_7():
             self.logger.info('press 7')
+            counters['corp_bad_publicity'].decrement_counter()
 
         def on_press_8():
             self.logger.info('press 8')
+            counters['runner_credits'].increment_counter()
 
         def on_press_9():
             self.logger.info('press 9')
+            counters['runner_credits'].decrement_counter()
 
         def on_press_10():
             self.logger.info('press 10')
+            counters['runner_handsize'].increment_counter()
 
         def on_press_11():
             self.logger.info('press 11')
+            counters['runner_handsize'].decrement_counter()
 
         def on_press_12():
             self.logger.info('press 12')
+            counters['runner_tags'].increment_counter()
 
         def on_press_13():
             self.logger.info('press 13')
+            counters['runner_tags'].decrement_counter()
 
         def on_press_14():
             self.logger.info('press 14')
+            counters['runner_brain_damage'].increment_counter()
 
         def on_press_15():
             self.logger.info('press 15')
+            counters['runner_brain_damage'].decrement_counter()
 
         def on_press_16():
             self.logger.info('press 16')
+            counters['runner_memory_units'].increment_counter()
 
         def on_press_17():
             self.logger.info('press 17')
+            counters['runner_memory_units'].decrement_counter()
 
         def on_press_18():
             self.logger.info('press 18')
