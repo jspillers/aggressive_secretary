@@ -16,97 +16,37 @@ class Gui:
             self.y_pos + self.padding + (self.row_size * row),
         )
 
+    def __init_btn(self, label, callback, r, c):
+        self._btn = self.sgc.Button(label=label, pos=self.__position(r, c))
+        self._btn.on_click = callback
+        self._btn.add()
+
     def init_click_track_btns(self):
 
         # Corp -----------------
-        #
-        self._btn = self.sgc.Button(label='Corp Click', pos=self.__position(0, 0))
-        self._btn.on_click = self.event_handler.corp_click_track
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ corp agenda', pos=self.__position(1, 0))
-        self._btn.on_click = self.event_handler.incr_corp_agenda_pnt
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- corp agenda', pos=self.__position(1, 1))
-        self._btn.on_click = self.event_handler.decr_corp_agenda_pnt
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ corp credits', pos=self.__position(2, 0))
-        self._btn.on_click = self.event_handler.incr_corp_credits
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- corp credits', pos=self.__position(3, 0))
-        self._btn.on_click = self.event_handler.decr_corp_credits
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ corp handsize', pos=self.__position(2, 1))
-        self._btn.on_click = self.event_handler.incr_corp_handsize
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- corp handsize', pos=self.__position(3, 1))
-        self._btn.on_click = self.event_handler.decr_corp_handsize
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ bad pub', pos=self.__position(4, 0))
-        self._btn.on_click = self.event_handler.incr_corp_handsize
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- bad pub', pos=self.__position(5, 0))
-        self._btn.on_click = self.event_handler.decr_corp_handsize
-        self._btn.add()
+        self.__init_btn('Corp Click', self.event_handler.corp_click_track, 0, 0)
+        self.__init_btn('+ corp agenda', self.event_handler.incr_corp_agenda_pnt, 1, 0)
+        self.__init_btn('- corp agenda', self.event_handler.decr_corp_agenda_pnt, 1, 1)
+        self.__init_btn('+ corp credits', self.event_handler.incr_corp_credits, 2, 0)
+        self.__init_btn('- corp credits', self.event_handler.decr_corp_credits, 3, 0)
+        self.__init_btn('+ corp handsize', self.event_handler.incr_corp_handsize, 2, 1)
+        self.__init_btn('- corp handsize', self.event_handler.decr_corp_handsize, 3, 1)
+        self.__init_btn('+ bad pub', self.event_handler.incr_corp_bad_pub, 4, 0)
+        self.__init_btn('- bad pub', self.event_handler.decr_corp_bad_pub, 5, 0)
 
         # Runner -----------------
         #
-        self._btn = self.sgc.Button(label='Runner Click', pos=self.__position(0, 2))
-        self._btn.on_click = self.event_handler.runner_click_track
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ runner agenda', pos=self.__position(1, 2))
-        self._btn.on_click = self.event_handler.incr_runner_agenda_pnt
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- runner agenda', pos=self.__position(1, 3))
-        self._btn.on_click = self.event_handler.decr_runner_agenda_pnt
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ runner credits', pos=self.__position(2, 2))
-        self._btn.on_click = self.event_handler.incr_runner_credits
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- runner credits', pos=self.__position(3, 2))
-        self._btn.on_click = self.event_handler.decr_runner_credits
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ runner handsize', pos=self.__position(2, 3))
-        self._btn.on_click = self.event_handler.incr_runner_handsize
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- runner handsize', pos=self.__position(3, 3))
-        self._btn.on_click = self.event_handler.decr_runner_handsize
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ tags', pos=self.__position(4, 2))
-        self._btn.on_click = self.event_handler.incr_runner_tags
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- tags', pos=self.__position(5, 2))
-        self._btn.on_click = self.event_handler.decr_runner_tags
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ brain damage', pos=self.__position(4, 3))
-        self._btn.on_click = self.event_handler.incr_runner_brain_dmg
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- brain damage', pos=self.__position(5, 3))
-        self._btn.on_click = self.event_handler.decr_runner_brain_dmg
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='+ mem units', pos=self.__position(6, 2))
-        self._btn.on_click = self.event_handler.incr_runner_mem_units
-        self._btn.add()
-
-        self._btn = self.sgc.Button(label='- mem units', pos=self.__position(7, 2))
-        self._btn.on_click = self.event_handler.decr_runner_mem_units
-        self._btn.add()
+        self.__init_btn('Runner Click', self.event_handler.runner_click_track, 0, 2)
+        self.__init_btn('+ runner agenda', self.event_handler.incr_runner_agenda_pnt, 1, 2)
+        self.__init_btn('- runner agenda', self.event_handler.decr_runner_agenda_pnt, 1, 3)
+        self.__init_btn('+ runner credits', self.event_handler.incr_runner_credits, 2, 2)
+        self.__init_btn('- runner credits', self.event_handler.decr_runner_credits, 3, 2)
+        self.__init_btn('+ runner handsize', self.event_handler.incr_runner_handsize, 2, 3)
+        self.__init_btn('- runner handsize', self.event_handler.decr_runner_handsize, 3, 3)
+        self.__init_btn('+ runner tags', self.event_handler.incr_runner_tags, 4, 2)
+        self.__init_btn('- runner tags', self.event_handler.decr_runner_tags, 5, 2)
+        self.__init_btn('+ brain dmg', self.event_handler.incr_runner_brain_dmg, 4, 3)
+        self.__init_btn('- brain dmg', self.event_handler.decr_runner_brain_dmg, 5, 3)
+        self.__init_btn('+ mem units', self.event_handler.incr_runner_mem_units, 6, 2)
+        self.__init_btn('- mem units', self.event_handler.decr_runner_mem_units, 7, 2)
 
