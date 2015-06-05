@@ -24,13 +24,15 @@ class IncrementableCounter:
         self.counter_label.add()
 
     def update(self):
-        self.counter_label.config()
+        self.counter_label.config(text=str(self.counter))
 
     def increment_counter(self):
         self.counter += 1
+        self.update()
 
     def decrement_counter(self):
         self.counter -= 1
+        self.update()
         
     def reset():
         self.counter = 0
