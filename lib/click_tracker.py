@@ -11,11 +11,11 @@ class ClickTrackers:
         self.__configure(kwargs)
 
         self.corp_click_track = ClickTracker(
-            pygame=self.pygame, screen=self.screen, sgc=self.sgc, use_gui=self.use_gui, 
+            pygame=self.pygame, screen=self.screen, sgc=self.sgc, 
             tracker_type='corp', x_pos=20, y_pos=20, logger=self.logger
         )
         self.runner_click_track = ClickTracker(
-            pygame=self.pygame, screen=self.screen, sgc=self.sgc, use_gui=self.use_gui,
+            pygame=self.pygame, screen=self.screen, sgc=self.sgc,
             tracker_type='runner', x_pos=420, y_pos=20, logger=self.logger
         )
         self.trackers = {
@@ -56,7 +56,6 @@ class ClickTrackers:
         self.logger = kwargs['logger']
         self.current_player = kwargs['current_player'] if 'current_player' in kwargs else 'corp'
         self.turn_num = kwargs['turn_num'] if 'turn_num' in kwargs else 1
-        self.use_gui = kwargs['use_gui'] if 'use_gui' in kwargs else True
 
 class ClickTracker:
 
@@ -77,11 +76,6 @@ class ClickTracker:
         self.tracker_bg = self.pygame.image.load(
             'images/' + self.tracker_type + '_click_track.png').convert_alpha()
 
-        if self.use_gui == True:
-            self.click_btn = self.sgc.Button(label='click', pos=(self.x_pos, self.y_pos + 100))
-            self.click_btn.on_click = self.handle_click
-            self.click_btn.add()
-
     def click_image(self):
         return self.pygame.image.load('images/click_track_mask.png').convert_alpha()
 
@@ -92,12 +86,9 @@ class ClickTracker:
             self.screen.blit(self.click_image(), self.click_image_positions[click])
 
     def reset(self):
-      self.clicks = 0
+        self.clicks = 0
 
     def handle_click(self):
-        if self.use_gui == True:
-            self.sgc.Button.on_click(self.click_btn) 
-
         if self.clicks < self.max_clicks:
             self.clicks += 1
 
@@ -110,6 +101,5 @@ class ClickTracker:
         self.x_pos = kwargs['x_pos']
         self.y_pos = kwargs['y_pos']
         self.clicks = kwargs['clicks'] if 'clicks' in kwargs else 0
-        self.use_gui = kwargs['use_gui'] if 'use_gui' in kwargs else True
 
 

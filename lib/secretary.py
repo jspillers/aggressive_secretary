@@ -19,32 +19,34 @@ logger.addHandler(console_handler)
 
 if sys.platform != 'darwin':
     USE_GUI = False
+    SCREEN_SIZE = (800,480)
     logger.info('GPIO is present, system is ' + sys.platform)    
 else:
     USE_GUI = True
+    SCREEN_SIZE = (1200,480)
     logger.info('GPIO is NOT present, system is ' + sys.platform)    
 
 pygame.display.init()
 pygame.font.init()
 
-screen = sgc.surface.Screen((800,480))
+screen = sgc.surface.Screen(SCREEN_SIZE)
 
 clock = pygame.time.Clock()
 
 bg_images = BackgroundImages(pygame, screen, logger)
 
 # ----- Click Track
-click_tracks = ClickTrackers(pygame=pygame, screen=screen, sgc=sgc, use_gui=USE_GUI, logger=logger)
+click_tracks = ClickTrackers(pygame=pygame, screen=screen, sgc=sgc, logger=logger)
 
 # ----- Agendas Track
 corp_agendas = AgendaTracker(
     pygame=pygame, sgc=sgc, tracker_type='corp',
-    x_pos=20, y_pos=180
+    x_pos=20, y_pos=140
 )
 
 runner_agendas = AgendaTracker(
     pygame=pygame, sgc=sgc, tracker_type='runner',
-    x_pos=20, y_pos=200
+    x_pos=20, y_pos=140
 )
 
 # ----- Counters
