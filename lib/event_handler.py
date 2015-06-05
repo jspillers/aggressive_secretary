@@ -74,116 +74,116 @@ class EventHandler():
                 self.pygame.display.set_mode(self.screen.get_size(), self.pygame.FULLSCREEN)
 
     def __handle_gpio_events(self):
-        def on_press_2():
-            self.logger.info('press 2')
-            self.counters['corp_credits'].increment_counter()
+        self.__handle_gpio_press(2, incr_corp_credits)
+        self.__handle_gpio_press(3, decr_corp_credits)
+        self.__handle_gpio_press(4, incr_corp_handsize)
+        self.__handle_gpio_press(5, decr_corp_handsize)
+        self.__handle_gpio_press(6, incr_corp_bad_pub)
+        self.__handle_gpio_press(7, decr_corp_bad_pub)
+        self.__handle_gpio_press(8, incr_runner_credits)
+        self.__handle_gpio_press(9, decr_runner_credits)
+        self.__handle_gpio_press(10, incr_runner_handsize)
+        self.__handle_gpio_press(11, decr_runner_handsize)
+        self.__handle_gpio_press(12, incr_runner_tags)
+        self.__handle_gpio_press(13, decr_runner_tags)
+        self.__handle_gpio_press(14, incr_runner_brain_dmg)
+        self.__handle_gpio_press(15, decr_runner_brain_dmg)
+        self.__handle_gpio_press(16, incr_runner_mem_units)
+        self.__handle_gpio_press(17, decr_runner_mem_units)
+        self.__handle_gpio_press(18, incr_runner_agenda_pnt)
+        self.__handle_gpio_press(19, decr_runner_agenda_pnt)
+        self.__handle_gpio_press(20, incr_corp_agenda_pnt)
+        self.__handle_gpio_press(21, decr_corp_agenda_pnt)
+        self.__handle_gpio_press(22, runner_click_track)
+        self.__handle_gpio_press(23, corp_click_track)
 
-        def on_press_3():
-            self.logger.info('press 3')
-            self.counters['corp_credits'].decrement_counter()
+    def incr_corp_credits(self):
+        self.logger.info('press 2')
+        self.counters['corp_credits'].increment_counter()
 
-        def on_press_4():
-            self.logger.info('press 4')
-            self.counters['corp_handsize'].increment_counter()
+    def decr_corp_credits(self):
+        self.logger.info('press 3')
+        self.counters['corp_credits'].decrement_counter()
 
-        def on_press_5():
-            self.logger.info('press 5')
-            self.counters['corp_handsize'].decrement_counter()
+    def incr_corp_handsize(self):
+        self.logger.info('press 4')
+        self.counters['corp_handsize'].increment_counter()
 
-        def on_press_6():
-            self.logger.info('press 6')
-            self.counters['corp_bad_publicity'].increment_counter()
+    def decr_corp_handsize(self):
+        self.logger.info('press 5')
+        self.counters['corp_handsize'].decrement_counter()
 
-        def on_press_7():
-            self.logger.info('press 7')
-            self.counters['corp_bad_publicity'].decrement_counter()
+    def incr_corp_bad_pub(self):
+        self.logger.info('press 6')
+        self.counters['corp_bad_publicity'].increment_counter()
 
-        def on_press_8():
-            self.logger.info('press 8')
-            self.counters['runner_credits'].increment_counter()
+    def decr_corp_bad_pub(self):
+        self.logger.info('press 7')
+        self.counters['corp_bad_publicity'].decrement_counter()
 
-        def on_press_9():
-            self.logger.info('press 9')
-            self.counters['runner_credits'].decrement_counter()
+    def incr_runner_credits(self):
+        self.logger.info('press 8')
+        self.counters['runner_credits'].increment_counter()
 
-        def on_press_10():
-            self.logger.info('press 10')
-            self.counters['runner_handsize'].increment_counter()
+    def decr_runner_credits(self):
+        self.logger.info('press 9')
+        self.counters['runner_credits'].decrement_counter()
 
-        def on_press_11():
-            self.logger.info('press 11')
-            self.counters['runner_handsize'].decrement_counter()
+    def incr_runner_handsize(self):
+        self.logger.info('press 10')
+        self.counters['runner_handsize'].increment_counter()
 
-        def on_press_12():
-            self.logger.info('press 12')
-            self.counters['runner_tags'].increment_counter()
+    def decr_runner_handsize(self):
+        self.logger.info('press 11')
+        self.counters['runner_handsize'].decrement_counter()
 
-        def on_press_13():
-            self.logger.info('press 13')
-            self.counters['runner_tags'].decrement_counter()
+    def incr_runner_tags(self):
+        self.logger.info('press 12')
+        self.counters['runner_tags'].increment_counter()
 
-        def on_press_14():
-            self.logger.info('press 14')
-            self.counters['runner_brain_damage'].increment_counter()
+    def decr_runner_tags(self):
+        self.logger.info('press 13')
+        self.counters['runner_tags'].decrement_counter()
 
-        def on_press_15():
-            self.logger.info('press 15')
-            self.counters['runner_brain_damage'].decrement_counter()
+    def incr_runner_brain_dmg(self):
+        self.logger.info('press 14')
+        self.counters['runner_brain_damage'].increment_counter()
 
-        def on_press_16():
-            self.logger.info('press 16')
-            self.counters['runner_memory_units'].increment_counter()
+    def decr_runner_brain_dmg(self):
+        self.logger.info('press 15')
+        self.counters['runner_brain_damage'].decrement_counter()
 
-        def on_press_17():
-            self.logger.info('press 17')
-            self.counters['runner_memory_units'].decrement_counter()
+    def incr_runner_mem_units(self):
+        self.logger.info('press 16')
+        self.counters['runner_memory_units'].increment_counter()
 
-        def on_press_18():
-            self.logger.info('press 18')
-            self.runner_agendas.add_point()
+    def decr_runner_mem_units(self):
+        self.logger.info('press 17')
+        self.counters['runner_memory_units'].decrement_counter()
 
-        def on_press_19():
-            self.logger.info('press 19')
-            self.runner_agendas.remove_point()
+    def incr_runner_agenda_pnt(self):
+        self.logger.info('press 18')
+        self.runner_agendas.add_point()
 
-        def on_press_20():
-            self.logger.info('press 20')
-            self.corp_agendas.add_point()
+    def decr_runner_agenda_pnt(self):
+        self.logger.info('press 19')
+        self.runner_agendas.remove_point()
 
-        def on_press_21():
-            self.logger.info('press 21')
-            self.corp_agendas.remove_point()
+    def incr_corp_agenda_pnt(self):
+        self.logger.info('press 20')
+        self.corp_agendas.add_point()
 
-        def on_press_22():
-            self.logger.info('press 22')
-            self.click_tracks.trackers['runner'].handle_click()
-            self.click_tracks.click_event()
+    def decr_corp_agenda_pnt(self):
+        self.logger.info('press 21')
+        self.corp_agendas.remove_point()
 
-        def on_press_23():
-            self.logger.info('press 23')
-            self.click_tracks.trackers['corp'].handle_click()
-            self.click_tracks.click_event()
+    def runner_click_track(self):
+        self.logger.info('press 22')
+        self.click_tracks.trackers['runner'].handle_click()
+        self.click_tracks.click_event()
 
-        self.__handle_gpio_press(2, on_press_2)
-        self.__handle_gpio_press(3, on_press_3)
-        self.__handle_gpio_press(4, on_press_4)
-        self.__handle_gpio_press(5, on_press_5)
-        self.__handle_gpio_press(6, on_press_6)
-        self.__handle_gpio_press(7, on_press_7)
-        self.__handle_gpio_press(8, on_press_8)
-        self.__handle_gpio_press(9, on_press_9)
-        self.__handle_gpio_press(10, on_press_10)
-        self.__handle_gpio_press(11, on_press_11)
-        self.__handle_gpio_press(12, on_press_12)
-        self.__handle_gpio_press(13, on_press_13)
-        self.__handle_gpio_press(14, on_press_14)
-        self.__handle_gpio_press(15, on_press_15)
-        self.__handle_gpio_press(16, on_press_16)
-        self.__handle_gpio_press(17, on_press_17)
-        self.__handle_gpio_press(18, on_press_18)
-        self.__handle_gpio_press(19, on_press_19)
-        self.__handle_gpio_press(20, on_press_20)
-        self.__handle_gpio_press(21, on_press_21)
-        self.__handle_gpio_press(22, on_press_22)
-        self.__handle_gpio_press(23, on_press_23)
+    def corp_click_track(self):
+        self.logger.info('press 23')
+        self.click_tracks.trackers['corp'].handle_click()
+        self.click_tracks.click_event()
 

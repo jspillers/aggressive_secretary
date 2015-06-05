@@ -9,6 +9,7 @@ from click_tracker import *
 from incrementable_counter import *
 from agenda_tracker import *
 from event_handler import *
+from gui import *
 
 log_format = '%(asctime)-6s: %(name)s - %(levelname)s - %(message)s'
 console_handler = logging.StreamHandler()
@@ -23,7 +24,7 @@ if sys.platform != 'darwin':
     logger.info('GPIO is present, system is ' + sys.platform)    
 else:
     USE_GUI = True
-    SCREEN_SIZE = (1200,480)
+    SCREEN_SIZE = (1330,480)
     logger.info('GPIO is NOT present, system is ' + sys.platform)    
 
 pygame.display.init()
@@ -41,12 +42,12 @@ click_tracks = ClickTrackers(pygame=pygame, screen=screen, sgc=sgc, logger=logge
 # ----- Agendas Track
 corp_agendas = AgendaTracker(
     pygame=pygame, sgc=sgc, tracker_type='corp',
-    x_pos=20, y_pos=150
+    x_pos=20, y_pos=160
 )
 
 runner_agendas = AgendaTracker(
     pygame=pygame, sgc=sgc, tracker_type='runner',
-    x_pos=20, y_pos=150
+    x_pos=420, y_pos=160
 )
 
 # ----- Counters
@@ -100,6 +101,9 @@ event_handler = EventHandler(
     counters=counters, runner_agendas=runner_agendas,
     corp_agendas=corp_agendas, logger=logger
 )
+
+if USE_GUI == True:
+    mouse_gui = Gui(event_handler=event_handler, sgc=sgc, x_pos=800, y_pos=0)
 
 while True:
     time = clock.tick(30)

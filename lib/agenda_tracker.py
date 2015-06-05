@@ -12,7 +12,7 @@ class AgendaTracker:
         if len(self.agenda_icons) < 14:
             _agenda_icon = self.sgc.Simple(
                 'images/agenda_point.png', 
-                pos=(self.x_pos + (48 * len(self.agenda_icons)), self.y_pos)
+                pos=(self.x_pos + (45 * len(self.agenda_icons)), self.y_pos)
             )
             _agenda_icon.add()
             self.agenda_icons.append(_agenda_icon)
