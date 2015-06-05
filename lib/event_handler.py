@@ -16,7 +16,7 @@ except NameError:
 else:
     GPIO.setmode(GPIO.BCM)
     # setup pins 2 through 19
-    for pin_num in list(range(2,20)):
+    for pin_num in list(range(2,24)):
         GPIO.setup(pin_num, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 class EventHandler():
@@ -28,10 +28,9 @@ class EventHandler():
         self.click_tracks = kwargs['click_tracks']
         self.bg_images = kwargs['bg_images']
         self.counters = kwargs['counters']
-
+        self.runner_agendas = kwargs['runner_agendas']
+        self.corp_agendas = kwargs['corp_agendas']
         self.buttons_pressed = {}
-        for pin_num in list(range(2,20)):
-            self.buttons_pressed[str(pin_num)] = False
 
     def call(self, time):
         global GPIO
@@ -47,7 +46,8 @@ class EventHandler():
         global GPIO
         button_input_state = GPIO.input(pin_num)
         if button_input_state == False:
-            if self.buttons_pressed[str(pin_num)] == False:
+            _btn_press = self.buttons_pressed.get(str(pin_num), 'NotFound')
+            if _btn_press == False or _btn_press == 'NotFound':
                 self.logger.info('button press on pin ' + str(pin_num))
                 self.buttons_pressed[str(pin_num)] = True
                 on_press()
@@ -140,11 +140,27 @@ class EventHandler():
 
         def on_press_18():
             self.logger.info('press 18')
-            self.click_tracks.trackers['runner'].handle_click()
-            self.click_tracks.click_event()
+            self.runner_agendas.add_point()
 
         def on_press_19():
             self.logger.info('press 19')
+            self.runner_agendas.remove_point()
+
+        def on_press_20():
+            self.logger.info('press 20')
+            self.corp_agendas.add_point()
+
+        def on_press_21():
+            self.logger.info('press 21')
+            self.corp_agendas.remove_point()
+
+        def on_press_22():
+            self.logger.info('press 22')
+            self.click_tracks.trackers['runner'].handle_click()
+            self.click_tracks.click_event()
+
+        def on_press_23():
+            self.logger.info('press 23')
             self.click_tracks.trackers['corp'].handle_click()
             self.click_tracks.click_event()
 
@@ -166,4 +182,8 @@ class EventHandler():
         self.__handle_gpio_press(17, on_press_17)
         self.__handle_gpio_press(18, on_press_18)
         self.__handle_gpio_press(19, on_press_19)
+        self.__handle_gpio_press(20, on_press_20)
+        self.__handle_gpio_press(21, on_press_21)
+        self.__handle_gpio_press(22, on_press_22)
+        self.__handle_gpio_press(23, on_press_23)
 

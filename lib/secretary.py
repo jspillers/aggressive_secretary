@@ -7,6 +7,7 @@ import logging
 from background_images import *
 from click_tracker import *
 from incrementable_counter import *
+from agenda_tracker import *
 from event_handler import *
 
 log_format = '%(asctime)-6s: %(name)s - %(levelname)s - %(message)s'
@@ -30,21 +31,36 @@ screen = sgc.surface.Screen((800,480))
 
 clock = pygame.time.Clock()
 
-# setup background and click trackers
 bg_images = BackgroundImages(pygame, screen, logger)
+
+# ----- Click Track
 click_tracks = ClickTrackers(pygame=pygame, screen=screen, sgc=sgc, use_gui=USE_GUI, logger=logger)
 
+# ----- Agendas Track
+corp_agendas = AgendaTracker(
+    pygame=pygame, sgc=sgc, tracker_type='corp',
+    x_pos=20, y_pos=180
+)
+corp_agendas.add_point()
+corp_agendas.add_point()
+
+runner_agendas = AgendaTracker(
+    pygame=pygame, sgc=sgc, tracker_type='runner',
+    x_pos=20, y_pos=200
+)
+
+# ----- Counters
 counters = {}
 
 # ----- Corporation counters
 counters['corp_credits'] = IncrementableCounter(
     pygame=pygame, sgc=sgc, counter_type='credits', 
-    x_pos=20, y_pos=200, counter=5
+    x_pos=20, y_pos=240, counter=5
 )
 
 counters['corp_handsize'] = IncrementableCounter(
     pygame=pygame, sgc=sgc, counter_type='corp_handsize', 
-    x_pos=200, y_pos=200, counter=5
+    x_pos=200, y_pos=240, counter=5
 )
 
 counters['corp_bad_publicity'] = IncrementableCounter(
@@ -55,12 +71,12 @@ counters['corp_bad_publicity'] = IncrementableCounter(
 # ----- Runner counters
 counters['runner_credits'] = IncrementableCounter(
     pygame=pygame, sgc=sgc, counter_type='credits', 
-    x_pos=420, y_pos=200, counter=5
+    x_pos=420, y_pos=240, counter=5
 )
 
 counters['runner_handsize'] = IncrementableCounter(
     pygame=pygame, sgc=sgc, counter_type='runner_handsize', 
-    x_pos=620, y_pos=200, counter=5
+    x_pos=620, y_pos=240, counter=5
 )
 
 counters['runner_tags'] = IncrementableCounter(
@@ -81,7 +97,8 @@ counters['runner_memory_units'] = IncrementableCounter(
 event_handler = EventHandler(
     pygame=pygame, sgc=sgc, screen=screen, 
     click_tracks=click_tracks, bg_images=bg_images, 
-    counters=counters, logger=logger
+    counters=counters, runner_agendas=runner_agendas,
+    corp_agendas=corp_agendas, logger=logger
 )
 
 while True:
